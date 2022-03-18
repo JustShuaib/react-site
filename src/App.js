@@ -2,12 +2,13 @@ import { useState } from "react";
 import Form from "./Components/Form";
 import List from "./Components/List";
 
-const idGen = () => Math.floor(Math.random() * 500);
+const idGen = () => Math.random() * 1000; //Generate random Number as the ID
 
 const App = () => {
   const [value, setValue] = useState("");
   const [taskList, setTaskList] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -17,17 +18,30 @@ const App = () => {
       setTaskList([...taskList, newItem]);
     }
     setValue("");
+    setIsEditing(false);
     e.preventDefault();
   };
 
-  const handleDelete = (e) => {
-    e.preventDefault();
+  const handleDelete = (id) => {
+    const newList = taskList.filter((task) => task.id !== id);
+    setTaskList(newList);
+    setValue("");
+    setIsEditing(false);
   };
-  const handleEdit = (e) => {
-    e.preventDefault();
+  const handleEdit = (id) => {
+    if (value.length <= 0) {
+      const textObj = taskList.find((task) => task.id === id).input;
+      const newList = taskList.filter((task) => task.id !== id);
+      setTaskList(newList);
+      setValue(textObj);
+      setIsEditing(true);
+    }
   };
+
   const handleClear = () => {
     setTaskList([]);
+    setValue("");
+    setIsEditing(false);
   };
   return (
     <main>

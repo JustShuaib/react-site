@@ -1,4 +1,4 @@
-const Form = ({ handleChange, handleSubmit, value }) => {
+const Form = ({ handleChange, handleSubmit, isEditing, value }) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -13,9 +13,14 @@ const Form = ({ handleChange, handleSubmit, value }) => {
       />
       <button
         type="button"
-        className="bg-blue-500 uppercase font-semibold tracking-wider hover:bg-slate-100 hover:text-blue-600 transition-all rounded-md px-3 py-1.5 text-slate-50 hover:border hover:border-blue-500"
+        onClick={handleSubmit}
+        className={
+          isEditing
+            ? "bg-green-500 uppercase font-semibold tracking-wider hover:bg-slate-100 hover:text-green-600 transition-all rounded-md px-3 py-1.5 text-slate-50 hover:border hover:border-green-500"
+            : "bg-blue-500 uppercase font-semibold tracking-wider hover:bg-slate-100 hover:text-blue-600 transition-all rounded-md px-3 py-1.5 text-slate-50 hover:border hover:border-blue-500"
+        }
       >
-        Add item
+        {isEditing ? "Edit Item" : "Add item"}
       </button>
     </form>
   );
